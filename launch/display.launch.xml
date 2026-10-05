@@ -1,0 +1,16 @@
+<launch>
+  <!-- Path Variables -->
+  <let name="xacro_path" value="$(find-pkg-share servo_description)/urdf/servo_description.urdf" />
+  <let name="rviz_config_path" value="$(find-pkg-share servo_description)/config/rviz_config.rviz" />
+
+  <!-- Robot State Publisher Node -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher">
+    <param name="robot_description" value="$(command 'xacro $(var xacro_path)')" type="str" />
+  </node>
+
+  <!-- Joint State Publisher GUI (Allows controlling continuous/revolute joints) -->
+  <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
+
+  <!-- RViz2 Node -->
+  <node pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config_path)" />
+</launch>
